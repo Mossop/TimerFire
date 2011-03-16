@@ -42,14 +42,20 @@
 
   <script type="application/x-javascript" src="timerfire.js" />
 
+  <menu id="timerfire-menu" label="Fire Timer" insertafter="devToolsSeparator">
+    <menupopup oncommand="fireTimer(event.target.getAttribute('timer'))">
+      <menuitem timer="background-update-timer" label="App Update Check"/>
+      <menuitem timer="addon-background-update-timer" label="Add-on Update Check"/>
+      <menuitem timer="blocklist-background-update-timer" label="Blocklist Update Check"/>
+    </menupopup>
+  </menu>
+
   <menupopup id="menu_ToolsPopup">
-    <menu label="Fire Timer" insertafter="devToolsSeparator">
-      <menupopup oncommand="fireTimer(event.target.getAttribute('timer'))">
-        <menuitem timer="background-update-timer" label="App Update Check"/>
-        <menuitem timer="addon-background-update-timer" label="Add-on Update Check"/>
-        <menuitem timer="blocklist-background-update-timer" label="Blocklist Update Check"/>
-      </menupopup>
-    </menu>
+    <menu id="timerfire-menu" insertafter="devToolsSeparator"/>
+  </menupopup>
+
+  <menupopup id="taskPopup">
+    <menu id="timerfire-menu" insertafter="devToolsSeparator"/>
   </menupopup>
   
 </overlay>
