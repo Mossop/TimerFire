@@ -35,28 +35,24 @@
 #
 # ***** END LICENSE BLOCK *****
 
-function fireTimer(id) {
-  var component = null;
+function fireTimerCallback(contract) {
+  if (contract in Components.classes) {
+    Components.classes[contract].getService(Components.interfaces.nsITimerCallback)
+                                .notify(null);
+  }
+}
 
+function fireTimer(id) {
   switch (id) {
   case "background-update-timer":
-    component = Components.classes["@mozilla.org/updates/update-service;1"]
-                          .getService(Components.interfaces.nsITimerCallback);
+    fireTimerCallback("@mozilla.org/updates/update-service;1");
     break;
   case "addon-background-update-timer":
-    component = Components.classes["@mozilla.org/extensions/manager;1"]
-                          .getService(Components.interfaces.nsITimerCallback);
+    fireTimerCallback("@mozilla.org/extensions/manager;1");
+    fireTimerCallback("@mozilla.org/addons/integration;1");
     break;
   case "blocklist-background-update-timer":
-    component = Components.classes["@mozilla.org/extensions/blocklist;1"]
-                          .getService(Components.interfaces.nsITimerCallback);
+    fireTimerCallback("@mozilla.org/extensions/blocklist;1");
     break;
   }
-
-  if (!component) {
-    alert("Unknown timer");
-    return;
-  }
-
-  component.notify(null);
 }
